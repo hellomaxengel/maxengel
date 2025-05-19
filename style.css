@@ -1,4 +1,3 @@
-/* --- Reset & Base Styles --- */
 body {
   margin: 0;
   font-family: 'Inter', sans-serif;
@@ -6,28 +5,28 @@ body {
   background: linear-gradient(to top right, #f6f6f6, #ffe3c3, #ffae88);
 }
 
-/* --- Fade-in animation on scroll --- */
+/* --- Fade-in & animation on scroll --- */
 .fade-in-on-scroll {
   opacity: 0;
   transform: translateY(40px) scale(0.98);
-  transition: opacity 1.1s cubic-bezier(.4,0,.2,1), transform 1.1s cubic-bezier(.4,0,.2,1);
+  transition: opacity 1.1s cubic-bezier(.4,0,.2,1), transform 1.1s cubic-bezier(.4,0,.2,1), box-shadow 1s;
+  will-change: opacity, transform;
 }
 .fade-in-on-scroll.visible {
   opacity: 1;
   transform: none;
 }
 
-/* --- Gradient background for banner --- */
+/* --- Banner gradient and hero --- */
 .banner-gradient-bg {
   padding: 48px 0 0 0;
   background: radial-gradient(ellipse 90% 75% at 50% 0%, #ffe3c3 90%, #ffae88 100%);
 }
 
-/* --- Banner Hero Section --- */
 .banner-hero {
   width: 100%;
-  max-width: 1300px;         /* largeur max bannière */
-  aspect-ratio: 4 / 1;       /* ratio 4:1 */
+  max-width: 1300px;
+  aspect-ratio: 4 / 1;
   margin: 0 auto 2rem auto;
   overflow: hidden;
   background: #ffe3c3;
@@ -36,8 +35,8 @@ body {
   justify-content: center;
   box-shadow: 0 12px 48px 0 rgba(255, 148, 64, 0.10), 0 4px 28px rgba(0,0,0,0.08);
   border-radius: 24px;
+  position: relative;
 }
-
 .banner-hero img {
   width: 100%;
   height: 100%;
@@ -45,7 +44,128 @@ body {
   display: block;
 }
 
-/* --- Layout Sections --- */
+/* --- Meet Max Section --- */
+.meet-max-grid {
+  display: flex;
+  gap: 2.5rem;
+  align-items: center;
+  justify-content: center;
+}
+.max-portrait {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 5px solid #ffe3c3;
+  box-shadow: 0 8px 24px rgba(255, 148, 64, 0.08), 0 2px 8px rgba(0,0,0,0.05);
+  background: #fff6e9;
+}
+@media (max-width: 800px) {
+  .meet-max-grid { flex-direction: column; }
+  .max-portrait { margin-bottom: 1.5rem; }
+}
+
+/* --- Action Photo --- */
+.max-in-action {
+  margin: 2rem auto 3rem auto;
+  text-align: center;
+}
+.action-img {
+  width: 360px;
+  max-width: 80vw;
+  border-radius: 24px;
+  box-shadow: 0 8px 32px rgba(255, 148, 64, 0.12), 0 2px 10px rgba(0,0,0,0.07);
+  margin-bottom: 0.8rem;
+  background: #fff6e9;
+}
+.action-caption {
+  font-size: 1rem;
+  color: #a65619;
+  margin: 0 auto 2rem auto;
+}
+
+/* --- Signature Programs: Matrice 2x2 --- */
+.card-grid-2x2 {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: repeat(2, 1fr);
+  margin: 2.5rem auto 0 auto;
+  max-width: 850px;
+}
+@media (max-width: 700px) {
+  .card-grid-2x2 { grid-template-columns: 1fr; }
+}
+
+.card {
+  background: white;
+  padding: 1.7rem 1.2rem 1.2rem 1.2rem;
+  border-radius: 1.25rem;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.07);
+  text-align: left;
+  position: relative;
+  transition: box-shadow 0.4s, transform 0.35s;
+  overflow: hidden;
+  border: 1.5px solid #ffe3c3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 370px;
+  cursor: pointer;
+}
+.card:hover, .card:focus {
+  box-shadow: 0 16px 48px rgba(255, 148, 64, 0.22), 0 4px 28px rgba(0,0,0,0.11);
+  transform: translateY(-6px) scale(1.02);
+}
+.card-img {
+  width: 90px;
+  height: 90px;
+  border-radius: 16px;
+  object-fit: cover;
+  margin-bottom: 1rem;
+  background: #fff6e9;
+  box-shadow: 0 2px 8px rgba(255, 148, 64, 0.09);
+  border: 2.5px solid #ffae88;
+}
+.card h3 {
+  margin: 0.5rem 0 0.3rem 0;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+.card p {
+  color: #634000;
+  font-size: 1rem;
+  margin-bottom: 0;
+}
+
+.fancy-hover::before {
+  content: '';
+  display: block;
+  position: absolute;
+  top: -35%;
+  left: -40%;
+  width: 180%;
+  height: 170%;
+  background: linear-gradient(120deg, rgba(255,235,208,0.08) 60%, rgba(255,174,136,0.09) 100%);
+  z-index: 0;
+  pointer-events: none;
+  transition: opacity 0.4s;
+  opacity: 0.7;
+}
+.card:hover.fancy-hover::before {
+  opacity: 1;
+  filter: blur(1.5px) brightness(1.14);
+}
+
+.stats-list {
+  text-align: left;
+  max-width: 600px;
+  margin: 1rem auto;
+  list-style: disc inside;
+  color: #374151;
+}
+
+/* --- Headings & layout --- */
 header,
 section,
 footer {
@@ -54,8 +174,6 @@ footer {
   margin: auto;
   text-align: center;
 }
-
-/* --- Headings --- */
 h1 {
   font-family: 'Montserrat', sans-serif;
   font-size: 2.75rem;
@@ -65,8 +183,6 @@ h2 {
   font-size: 2rem;
   margin-bottom: 1rem;
 }
-
-/* --- CTA Buttons --- */
 .cta-buttons a {
   display: inline-block;
   padding: 0.75rem 1.5rem;
@@ -83,38 +199,6 @@ h2 {
   border: 2px solid #f97316;
   color: #f97316;
 }
-
-/* --- Video Wrapper --- */
-.video-wrapper video {
-  max-width: 100%;
-  border-radius: 1rem;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-}
-
-/* --- Stats List --- */
-.stats-list {
-  text-align: left;
-  max-width: 600px;
-  margin: 1rem auto;
-  list-style: disc inside;
-  color: #374151;
-}
-
-/* --- Signature Programs Cards --- */
-.card-grid {
-  display: grid;
-  gap: 1.5rem;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-}
-.card {
-  background: white;
-  padding: 1.5rem;
-  border-radius: 1rem;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
-  text-align: left;
-}
-
-/* --- Footer --- */
 footer {
   font-size: 0.875rem;
   padding-bottom: 2rem;
@@ -138,12 +222,9 @@ footer a {
   h1 {
     font-size: 2rem;
   }
-  .card-grid {
+  .card-grid-2x2 {
     grid-template-columns: 1fr;
   }
 }
 
-/* --- Utility Classes --- */
-.mt-4 {
-  margin-top: 1.5rem;
-}
+.mt-4 { margin-top: 1.5rem; }
