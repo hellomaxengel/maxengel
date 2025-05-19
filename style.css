@@ -9,12 +9,18 @@ body {
 /* --- Fade-in animation on scroll --- */
 .fade-in-on-scroll {
   opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.8s ease, transform 0.8s ease;
+  transform: translateY(40px) scale(0.98);
+  transition: opacity 1.1s cubic-bezier(.4,0,.2,1), transform 1.1s cubic-bezier(.4,0,.2,1);
 }
 .fade-in-on-scroll.visible {
   opacity: 1;
   transform: none;
+}
+
+/* --- Gradient background for banner --- */
+.banner-gradient-bg {
+  padding: 48px 0 0 0;
+  background: radial-gradient(ellipse 90% 75% at 50% 0%, #ffe3c3 90%, #ffae88 100%);
 }
 
 /* --- Banner Hero Section --- */
@@ -28,12 +34,14 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  box-shadow: 0 12px 48px 0 rgba(255, 148, 64, 0.10), 0 4px 28px rgba(0,0,0,0.08);
+  border-radius: 24px;
 }
 
 .banner-hero img {
   width: 100%;
   height: 100%;
-  object-fit: contain;       /* affiche l'image entière sans crop */
+  object-fit: contain;
   display: block;
 }
 
