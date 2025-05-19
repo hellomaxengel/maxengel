@@ -4,13 +4,16 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Max Engel – High Energy Training</title>
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Montserrat:wght@700&display=swap"
       rel="stylesheet"
     />
+    <!-- CSS -->
     <link rel="stylesheet" href="style.css" />
+    <!-- Scroll fade-in -->
     <script>
       document.addEventListener("DOMContentLoaded", () => {
         const observer = new IntersectionObserver((entries) => {
@@ -27,6 +30,15 @@
     </script>
   </head>
   <body>
+    <!-- Hero Banner en haut -->
+    <section class="fade-in-on-scroll banner-hero">
+      <img
+        src="assets/images/carousel-slide-2.jpg"
+        alt="Trusted by major brands"
+        class="banner-img"
+      />
+    </section>
+
     <header class="fade-in-on-scroll">
       <h1>High Energy Training That Boosts Sales &amp; Leadership</h1>
       <p>
@@ -34,13 +46,15 @@
         grounded in real business outcomes.
       </p>
       <div class="cta-buttons">
-        <a href="https://calendly.com/max-engel-pro" class="cta-primary">Book a Call</a>
+        <a href="https://calendly.com/max-engel-pro" class="cta-primary"
+          >Book a Call</a
+        >
         <a href="#programs" class="cta-secondary">Explore Programs</a>
       </div>
     </header>
 
     <section class="fade-in-on-scroll video-wrapper">
-      <video autoplay muted playsinline controls>
+      <video autoplay playsinline controls>
         <source src="assets/videos/max-engel-intro.mp4" type="video/mp4" />
         Your browser does not support the video tag.
       </video>
@@ -61,14 +75,6 @@
         <li>Trusted by Imparta and Lepaya</li>
         <li>Hybrid-ready: live, online, or blended formats</li>
       </ul>
-    </section>
-
-    <section class="fade-in-on-scroll">
-      <img
-        src="assets/images/carousel-slide-2.jpg"
-        alt="Trusted by major brands"
-        class="banner-img"
-      />
     </section>
 
     <section id="programs" class="fade-in-on-scroll">
