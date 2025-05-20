@@ -2,16 +2,142 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Pitch & Presence | Max Engel Training</title>
+  <title>Pitch & Presence | Max Engel</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <link rel="stylesheet" href="style.css" />
+  <style>
+    .module-main {
+      max-width: 720px;
+      margin: 2.4rem auto 2.7rem auto;
+      padding: 0 1.1rem;
+    }
+    .module-hero-img {
+      width: 100%;
+      max-width: 500px;
+      display: block;
+      margin: 0 auto 2.1rem auto;
+      border-radius: 1.3em;
+      box-shadow: 0 6px 36px #ffae8837;
+    }
+    .section-title {
+      font-size: 2.1rem;
+      margin-top: 2.3rem;
+      font-family: 'Montserrat', sans-serif;
+      color: #ff9142;
+      letter-spacing: -0.5px;
+      margin-bottom: 0.7rem;
+      text-align: left;
+    }
+    .module-main h1 {
+      font-size: 2.5rem;
+      font-family: 'Montserrat', sans-serif;
+      color: #222;
+      font-weight: 800;
+      text-align: left;
+      margin-top: 0.2em;
+      margin-bottom: 0.35em;
+      letter-spacing: -0.8px;
+    }
+    .module-main ul, .module-main ol {
+      font-size: 1.13rem;
+      margin-left: 1.4em;
+      margin-bottom: 1.2em;
+      color: #6b3706;
+    }
+    .module-main p, .module-main li {
+      font-size: 1.14rem;
+      line-height: 1.63;
+    }
+    .cta-buttons {
+      display: flex;
+      gap: 1.4em;
+      margin: 2.6em 0 2.7em 0;
+      flex-wrap: wrap;
+    }
+    .cta-buttons a {
+      background: #ff9142;
+      color: #fff;
+      font-weight: 600;
+      border-radius: 30px;
+      font-size: 1.11em;
+      padding: 0.85em 2.1em;
+      text-decoration: none;
+      transition: background 0.2s;
+      box-shadow: 0 3px 12px #ffae8833;
+    }
+    .cta-buttons a.cta-secondary {
+      background: #fff;
+      color: #ff9142;
+      border: 2px solid #ff9142;
+    }
+    .testimonial {
+      color: #ff9142;
+      font-style: italic;
+      background: #fffbe7;
+      border-radius: 1.3rem;
+      padding: 1.2rem 1.7rem 1.1rem 1.7rem;
+      margin: 2.8rem 0 1.8rem 0;
+      font-size: 1.11em;
+      box-shadow: 0 2px 8px #ff914217;
+      text-align: left;
+    }
+    @media (max-width: 700px) {
+      .module-main { max-width: 99vw; }
+      .module-hero-img { max-width: 99vw;}
+      .section-title { font-size: 1.38rem; }
+      .module-main h1 { font-size: 1.57rem;}
+      .cta-buttons { flex-direction: column; gap: 0.8em;}
+    }
+  </style>
 </head>
 <body>
-  <header>
-    <h1>Pitch & Presence</h1>
-    <p>
-      Learn to command attention and drive action. This program develops your public speaking, storytelling, and meeting skills — so your message always lands, and your presence resonates, whether in person or online.
-    </p>
-    <a href="index.html" class="cta-secondary">Back to Home</a>
+  <header class="module-main" style="margin-bottom: 0;">
+    <a href="index.html#programs" style="text-decoration:none;color:#ff9142;font-size:1.09em;display:inline-block;margin:1.1em 0 0.8em 0;">
+      ← Back to All Programs
+    </a>
   </header>
+  <main class="module-main">
+    <h1>Pitch & Presence</h1>
+    <img src="assets/module/pitch-presence.jpg" class="module-hero-img" alt="Pitch & Presence Workshop">
+    <p style="font-size:1.22em;margin-bottom:2.2em;">
+      <strong>Speak with impact, influence, and clarity—every time.<br>
+      Learn how to command a room, deliver your message, and leave a lasting impression in any business setting.</strong>
+    </p>
+    <h2 class="section-title">Key Benefits</h2>
+    <ul>
+      <li>Develop executive presence and persuasive communication</li>
+      <li>Structure your message for maximum impact</li>
+      <li>Master confident delivery in meetings, pitches, and keynotes</li>
+      <li>Adapt your style to any audience and situation</li>
+    </ul>
+    <h2 class="section-title">Who Is It For?</h2>
+    <p>Leaders, managers, and business professionals who want to inspire, influence, and win attention—whether on stage, in meetings, or in virtual settings.</p>
+    <h2 class="section-title">What You'll Experience</h2>
+    <ul>
+      <li>Live coaching on real presentations</li>
+      <li>Personalized feedback and video analysis</li>
+      <li>Proven storytelling and body language techniques</li>
+    </ul>
+    <h2 class="section-title">Session Example</h2>
+    <ol>
+      <li><strong>Message Clarity Lab</strong>: Craft and sharpen your pitch using proven frameworks.</li>
+      <li><strong>Delivery Masterclass</strong>: Hands-on practice with video feedback and coaching.</li>
+      <li><strong>Executive Presence Workshop</strong>: Boost confidence and “stage” charisma with easy tools.</li>
+    </ol>
+    <blockquote class="testimonial">
+      “Max’s training transformed the way I speak in front of clients. We now win more pitches—and my team is more confident!”<br>
+      <span style="color:#222;">— Pol Aymerich, Trainer Readiness Lead, Apple</span>
+    </blockquote>
+    <div class="cta-buttons">
+      <a href="mailto:hello@maxengel.net?subject=Pitch & Presence - More Info">Get More Info</a>
+      <a href="https://calendly.com/max-engel-pro" class="cta-secondary" target="_blank" rel="noopener">Book a Call</a>
+    </div>
+    <p style="margin-top:3.3em;">
+      <a href="index.html#programs" style="color:#ff9142;">← Back to All Programs</a>
+    </p>
+  </main>
+  <footer style="text-align:center;max-width:720px;margin:1.6em auto 0 auto;font-size:1em;">
+    &copy; 2025 Max Engel. All rights reserved.
+  </footer>
 </body>
 </html>
