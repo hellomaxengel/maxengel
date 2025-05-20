@@ -259,3 +259,129 @@ footer a {
 }
 
 .mt-4 { margin-top: 1.5rem; }
+
+.testimonials-slider {
+  max-width: 780px;
+  margin: 3.5rem auto 4.5rem auto;
+  text-align: center;
+  padding: 0 1rem 0 1rem;
+}
+.testimonials-slider h2 {
+  font-size: 2rem;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  margin-bottom: 2.2rem;
+}
+.slider {
+  position: relative;
+  width: 100%;
+  min-height: 260px;
+}
+input[type="radio"][name="slider"] {
+  display: none;
+}
+.slides {
+  display: flex;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  min-height: 230px;
+}
+.slide {
+  flex: 1 0 100%;
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.96) translateY(30px);
+  transition: opacity 0.55s, transform 0.55s;
+  position: absolute;
+  left: 0; top: 0; width: 100%;
+  background: white;
+  border-radius: 22px;
+  box-shadow: 0 6px 28px rgba(255, 148, 64, 0.11);
+  padding: 2.5rem 1.6rem 2.2rem 1.6rem;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+input#t1:checked ~ .slides label:nth-child(1),
+input#t2:checked ~ .slides label:nth-child(2),
+input#t3:checked ~ .slides label:nth-child(3),
+input#t4:checked ~ .slides label:nth-child(4) {
+  opacity: 1;
+  pointer-events: all;
+  position: relative;
+  transform: scale(1) translateY(0);
+  z-index: 3;
+}
+.testimonial-quote {
+  font-size: 3.5rem;
+  color: #ffae88;
+  line-height: 1;
+  position: absolute;
+  left: 24px;
+  top: 6px;
+  opacity: 0.25;
+  z-index: 1;
+  font-family: 'Montserrat', serif;
+}
+blockquote {
+  margin: 0 0 2.2rem 0;
+  font-size: 1.18rem;
+  font-style: italic;
+  color: #222;
+  position: relative;
+  z-index: 2;
+}
+.testimonial-author {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.1rem;
+  font-size: 1.05rem;
+  font-weight: 500;
+}
+.testimonial-initial {
+  display: inline-flex;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  font-family: 'Montserrat', sans-serif;
+  color: #fff;
+  font-weight: bold;
+  margin-right: 0.3rem;
+}
+.slider-controls {
+  margin: 0.8rem 0 0 0;
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+}
+.slider-controls label {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #ffae88;
+  opacity: 0.5;
+  cursor: pointer;
+  transition: opacity 0.2s, box-shadow 0.3s;
+  box-shadow: 0 1px 4px #f9731632;
+  border: 2px solid transparent;
+}
+input#t1:checked ~ .slider-controls label[for="t1"],
+input#t2:checked ~ .slider-controls label[for="t2"],
+input#t3:checked ~ .slider-controls label[for="t3"],
+input#t4:checked ~ .slider-controls label[for="t4"] {
+  opacity: 1;
+  border: 2px solid #f97316;
+  box-shadow: 0 0 0 2px #fff3, 0 2px 8px #f9731652;
+}
+@media (max-width: 600px) {
+  .slide { padding: 1.3rem 0.8rem 1.1rem 0.8rem; }
+  .testimonials-slider h2 { font-size: 1.4rem;}
+  .testimonial-quote { font-size: 2.2rem; left: 10px;}
+}
