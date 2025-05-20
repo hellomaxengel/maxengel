@@ -11,7 +11,6 @@ h1, h2, h3 {
   font-weight: 700;
   margin: 0.8em 0 0.4em 0;
 }
-
 h1 { font-size: 2.7rem; }
 h2 { font-size: 2rem; }
 h3 { font-size: 1.25rem; }
@@ -110,7 +109,7 @@ h3 { font-size: 1.25rem; }
   gap: 2rem;
   grid-template-columns: repeat(2, 1fr);
   margin: 2.5rem auto 0 auto;
-  max-width: 850px;
+  max-width: 950px;
 }
 @media (max-width: 700px) {
   .card-grid-2x2 { grid-template-columns: 1fr; }
@@ -128,7 +127,7 @@ h3 { font-size: 1.25rem; }
   border: 1.5px solid #ffe3c3;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   min-height: 370px;
   cursor: pointer;
 }
@@ -136,56 +135,74 @@ h3 { font-size: 1.25rem; }
   box-shadow: 0 16px 48px rgba(255, 148, 64, 0.22), 0 4px 28px rgba(0,0,0,0.11);
   transform: translateY(-6px) scale(1.02);
 }
-.card-img {
-  width: 90px;
-  height: 90px;
-  border-radius: 16px;
-  object-fit: cover;
-  margin-bottom: 1rem;
-  background: #fff6e9;
-  box-shadow: 0 2px 8px rgba(255, 148, 64, 0.09);
-  border: 2.5px solid #ffae88;
-}
 .card h3 {
-  margin: 0.5rem 0 0.3rem 0;
+  margin: 0.2em 0 0.4em 0;
   font-family: 'Montserrat', sans-serif;
-  font-size: 1.25rem;
+  font-size: 1.2rem;
   font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.7em;
+}
+.card h3 img, .card h3 svg {
+  display: inline-block;
+  width: 28px;
+  height: 28px;
+  vertical-align: middle;
+  margin-right: 0.5em;
 }
 .card p {
   color: #634000;
   font-size: 1rem;
-  margin-bottom: 0;
+  margin-bottom: 0.7em;
+  margin-top: 0.15em;
 }
 
-.fancy-hover::before {
-  content: '';
-  display: block;
+/* === Card SVG background (optionnel) === */
+.card-bg {
   position: absolute;
-  top: -35%;
-  left: -40%;
-  width: 180%;
-  height: 170%;
-  background: linear-gradient(120deg, rgba(255,235,208,0.08) 60%, rgba(255,174,136,0.09) 100%);
+  bottom: 10px; right: 10px;
+  width: 56px; height: 56px;
   z-index: 0;
+  opacity: 0.12;
   pointer-events: none;
-  transition: opacity 0.4s;
-  opacity: 0.7;
+  /* Option: background-image si tu veux un motif de fond, sinon ignore */
 }
-.card:hover.fancy-hover::before {
-  opacity: 1;
-  filter: blur(1.5px) brightness(1.14);
+.card:hover .card-bg {
+  opacity: 0.17;
 }
 
-.stats-list {
-  text-align: left;
-  max-width: 600px;
-  margin: 1rem auto;
+/* === Bullets stylées et liens === */
+.card ul {
   list-style: disc inside;
-  color: #374151;
+  margin: 0.6rem 0 0.2rem 0;
+  padding: 0;
+  color: #8b5c2a;
+  font-size: 1.01rem;
+  z-index: 2;
+  position: relative;
+}
+.card ul li {
+  margin-bottom: 0.4em;
+  text-decoration: none;
+}
+.card ul li a,
+.card ul li a:visited,
+.card h3,
+.card h3 *,
+.card p {
+  text-decoration: none !important;
+  border-bottom: none !important;
+  box-shadow: none !important;
+  color: inherit !important;
+}
+.card ul li a:hover,
+.card ul li a:focus {
+  color: #ff9142 !important;
+  text-decoration: underline !important;
 }
 
-/* === Section/Container Sizing === */
+/* === Responsive Section/Container Sizing === */
 header, section, footer {
   padding: 3rem 1.5rem;
   max-width: 960px;
@@ -217,7 +234,7 @@ footer a {
   text-decoration: underline;
 }
 
-/* === Testimonials Slider === */
+/* === Testimonials Slider (si tu l'utilises) === */
 .testimonials-slider {
   max-width: 780px;
   margin: 3.5rem auto 4.5rem auto;
@@ -375,108 +392,4 @@ input#t4:checked ~ .slider-controls label[for="t4"] {
   .card-grid-2x2 {
     grid-template-columns: 1fr;
   }
-}
-
-/* === Cards visuelles avec image/svg de fond et effets premium === */
-.card-bg {
-  position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  z-index: 0;
-  opacity: 0.12;
-  pointer-events: none;
-  border-radius: inherit;
-  transition: opacity 0.5s;
-  /* Default: nothing, custom below */
-}
-
-.card-visual-sale .card-bg {
-  background: url('assets/svg/sales.svg') no-repeat right 20px bottom 20px, 
-    radial-gradient(ellipse 90% 75% at 65% 100%, #ffae88 40%, transparent 100%);
-  background-size: 72px, cover;
-}
-.card-visual-leader .card-bg {
-  background: url('assets/svg/leader.svg') no-repeat right 18px bottom 18px, 
-    radial-gradient(ellipse 80% 60% at 25% 120%, #ffe3c3 42%, transparent 100%);
-  background-size: 68px, cover;
-}
-.card-visual-pitch .card-bg {
-  background: url('assets/svg/pitch.svg') no-repeat right 20px bottom 18px, 
-    radial-gradient(ellipse 60% 40% at 80% 120%, #ffd5ad 38%, transparent 100%);
-  background-size: 60px, cover;
-}
-.card-visual-client .card-bg {
-  background: url('assets/svg/client.svg') no-repeat right 20px bottom 14px, 
-    radial-gradient(ellipse 80% 50% at 55% 140%, #fffbe7 33%, transparent 100%);
-  background-size: 60px, cover;
-}
-
-/* Option : si pas de svg, désactive le background-image (le radial-gradient reste classe) */
-
-.card {
-  position: relative;
-  background: white;
-  /* ... le reste de ton style existant ... */
-  overflow: hidden;
-}
-
-.card.fancy-hover:hover, .card.fancy-hover:focus {
-  box-shadow: 0 18px 56px rgba(255, 148, 64, 0.26), 0 4px 28px rgba(0,0,0,0.14);
-  transform: translateY(-10px) scale(1.025);
-}
-
-.card.fancy-hover:hover .card-bg,
-.card.fancy-hover:focus .card-bg {
-  opacity: 0.20;
-  filter: blur(0.5px) brightness(1.10);
-}
-
-/* Bullets stylées */
-.card ul {
-  list-style: disc inside;
-  margin: 0.6rem 0 0.2rem 0;
-  padding: 0;
-  color: #8b5c2a;
-  font-size: 1.01rem;
-  z-index: 2;
-  position: relative;
-}
-.card ul li {
-  margin-bottom: 0.4em;
-}
-
-.card h3 {
-  position: relative;
-  z-index: 2;
-}
-
-/* Responsive */
-@media (max-width: 700px) {
-  .card-grid-2x2 { grid-template-columns: 1fr; }
-}
-
-.card a, .card a:visited, .card h3, .card ul li, .card p {
-  text-decoration: none !important;
-  color: inherit;
-}
-
-.card a,
-.card a:visited,
-.card ul li a,
-.card h3 {
-  text-decoration: none !important;
-  color: inherit !important;
-  border-bottom: none !important;
-}
-
-.card h3, .card h3 * {
-  text-decoration: none !important;
-  border-bottom: none !important;
-  box-shadow: none !important;
-}
-
-.card ul, .card ul li {
-  text-decoration: none !important;
-  border-bottom: none !important;
-  box-shadow: none !important;
 }
