@@ -454,3 +454,8 @@ input#t4:checked ~ .slider-controls label[for="t4"] {
 @media (max-width: 700px) {
   .card-grid-2x2 { grid-template-columns: 1fr; }
 }
+
+.card a, .card a:visited, .card h3, .card ul li, .card p {
+  text-decoration: none !important;
+  color: inherit;
+}
