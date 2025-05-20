@@ -2,139 +2,142 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Vector Banner – Max Engel</title>
+  <title>Customer Centricity & Advanced Client Service | Max Engel</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@700;600;400&family=Montserrat:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
   <style>
-    body {
-      margin: 0;
-      min-height: 100vh;
-      font-family: 'Inter', sans-serif;
-      color: #222;
-      background: radial-gradient(circle at 85% 0%, #ffae88 18%, #ffe3c3 90%);
+    .module-main {
+      max-width: 720px;
+      margin: 2.4rem auto 2.7rem auto;
+      padding: 0 1.1rem;
     }
-    .banner-container {
-      position: relative;
+    .module-hero-img {
       width: 100%;
-      max-width: 1500px;
-      margin: 0 auto;
-      min-height: 380px;
-      box-sizing: border-box;
-      overflow: hidden;
-      background: none;
-      border-radius: 0 0 40px 40px;
+      max-width: 500px;
+      display: block;
+      margin: 0 auto 2.1rem auto;
+      border-radius: 1.3em;
+      box-shadow: 0 6px 36px #ffae8837;
     }
-    .banner-inner {
-      position: relative;
-      z-index: 2;
-      padding: 60px 42px 40px 72px;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-    }
-    .banner-star {
-      position: absolute;
-      top: 35px;
-      right: 130px;
-      width: 66px;
-      height: 66px;
-      z-index: 3;
-    }
-    .banner-title {
-      font-family: 'Montserrat', 'Inter', Arial, sans-serif;
-      font-weight: 700;
-      font-size: 2.7rem;
-      margin-top: 32px;
-      margin-bottom: 22px;
+    .section-title {
+      font-size: 2.1rem;
+      margin-top: 2.3rem;
+      font-family: 'Montserrat', sans-serif;
+      color: #ff9142;
       letter-spacing: -0.5px;
-      line-height: 1.13;
-      color: #202020;
+      margin-bottom: 0.7rem;
+      text-align: left;
     }
-    .banner-box {
-      margin: 14px 0 0 0;
-      border: 2.5px solid #ffae88;
-      border-radius: 999px;
+    .module-main h1 {
+      font-size: 2.5rem;
+      font-family: 'Montserrat', sans-serif;
+      color: #222;
+      font-weight: 800;
+      text-align: left;
+      margin-top: 0.2em;
+      margin-bottom: 0.35em;
+      letter-spacing: -0.8px;
+    }
+    .module-main ul, .module-main ol {
+      font-size: 1.13rem;
+      margin-left: 1.4em;
+      margin-bottom: 1.2em;
+      color: #6b3706;
+    }
+    .module-main p, .module-main li {
+      font-size: 1.14rem;
+      line-height: 1.63;
+    }
+    .cta-buttons {
       display: flex;
-      align-items: center;
-      padding: 12px 34px;
-      font-size: 1.25rem;
+      gap: 1.4em;
+      margin: 2.6em 0 2.7em 0;
+      flex-wrap: wrap;
+    }
+    .cta-buttons a {
+      background: #ff9142;
+      color: #fff;
       font-weight: 600;
-      background: #fffdfa97;
-      box-shadow: 0 2px 16px #f9c89a20;
-      color: #1a160f;
-      gap: 12px;
+      border-radius: 30px;
+      font-size: 1.11em;
+      padding: 0.85em 2.1em;
+      text-decoration: none;
+      transition: background 0.2s;
+      box-shadow: 0 3px 12px #ffae8833;
     }
-    .banner-box span {
-      font-size: 1.33rem;
-      color: #e27c13;
-      margin-right: 2px;
+    .cta-buttons a.cta-secondary {
+      background: #fff;
+      color: #ff9142;
+      border: 2px solid #ff9142;
     }
-    .banner-box .lang {
-      color: #d47512;
-      font-weight: 700;
-    }
-    .banner-caption {
-      font-size: 1.22rem;
-      font-weight: 500;
-      margin: 40px 0 0 0;
-      color: #252525;
-      letter-spacing: 0.02em;
-    }
-    /* Arabesque SVG */
-    .banner-arabesque {
-      position: absolute;
-      left: -80px;
-      bottom: -70px;
-      width: 700px;
-      height: 280px;
-      z-index: 1;
-      pointer-events: none;
-      opacity: 0.94;
-    }
-    /* Responsive */
-    @media (max-width: 1100px) {
-      .banner-inner { padding: 48px 5vw 36px 7vw;}
-      .banner-star { right: 3vw;}
+    .testimonial {
+      color: #ff9142;
+      font-style: italic;
+      background: #fffbe7;
+      border-radius: 1.3rem;
+      padding: 1.2rem 1.7rem 1.1rem 1.7rem;
+      margin: 2.8rem 0 1.8rem 0;
+      font-size: 1.11em;
+      box-shadow: 0 2px 8px #ff914217;
+      text-align: left;
     }
     @media (max-width: 700px) {
-      .banner-inner { padding: 22vw 2vw 14vw 2vw; }
-      .banner-star { right: 8vw; top: 17px; width: 40px; height: 40px;}
-      .banner-title { font-size: 1.3rem;}
-      .banner-box { font-size: 1rem; padding: 9px 16px;}
-      .banner-arabesque { width: 270px; height: 85px; left: -22px; bottom: -18px;}
+      .module-main { max-width: 99vw; }
+      .module-hero-img { max-width: 99vw;}
+      .section-title { font-size: 1.38rem; }
+      .module-main h1 { font-size: 1.57rem;}
+      .cta-buttons { flex-direction: column; gap: 0.8em;}
     }
   </style>
 </head>
 <body>
-  <div class="banner-container">
-    <div class="banner-inner">
-      <!-- Étoile SVG -->
-      <svg class="banner-star" viewBox="0 0 64 64" fill="none">
-        <g>
-          <rect x="28" y="8" width="8" height="48" rx="4" fill="url(#g1)"/>
-          <rect x="8" y="28" width="48" height="8" rx="4" fill="url(#g1)"/>
-          <rect x="15.2" y="15.2" width="8" height="48" rx="4" transform="rotate(-45 15.2 15.2)" fill="url(#g1)"/>
-          <rect x="48.8" y="15.2" width="8" height="48" rx="4" transform="rotate(45 48.8 15.2)" fill="url(#g1)"/>
-        </g>
-        <defs>
-          <linearGradient id="g1" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
-            <stop stop-color="#f97316"/>
-            <stop offset="1" stop-color="#ffae88"/>
-          </linearGradient>
-        </defs>
-      </svg>
-
-      <div class="banner-title">
-        High-Energy Training That<br>
-        Boosts Sales and Leadership!
-      </div>
-
-      <div class="banner-box">
-        <span>🌐</span> Trainings available in 
-        <span class="lang">🇺🇸 English, 🇫🇷 French & 🇪🇸 Spanish.</span>
-      </div>
-
-     
-  </div>
+  <header class="module-main" style="margin-bottom: 0;">
+    <a href="index.html#programs" style="text-decoration:none;color:#ff9142;font-size:1.09em;display:inline-block;margin:1.1em 0 0.8em 0;">
+      ← Back to All Programs
+    </a>
+  </header>
+  <main class="module-main">
+    <h1>Customer Centricity & Advanced Client Service</h1>
+    <img src="assets/module/customer-centricity.jpg" class="module-hero-img" alt="Customer Centricity & Advanced Client Service Workshop">
+    <p style="font-size:1.22em;margin-bottom:2.2em;">
+      <strong>Deliver world-class service, build loyalty, and stand out in crowded markets.<br>
+      Turn every customer interaction into a moment of impact and lasting value.</strong>
+    </p>
+    <h2 class="section-title">Key Benefits</h2>
+    <ul>
+      <li>Map and improve every step of the real client journey</li>
+      <li>Transform complaints into loyalty opportunities</li>
+      <li>Deliver proactive, consultative, and high-impact service</li>
+      <li>Boost client retention and drive referrals</li>
+    </ul>
+    <h2 class="section-title">Who Is It For?</h2>
+    <p>Sales teams, service professionals, and managers committed to raising the bar for client satisfaction and experience.</p>
+    <h2 class="section-title">What You'll Experience</h2>
+    <ul>
+      <li>Hands-on journey mapping and service design</li>
+      <li>Real-world case studies and client scenarios</li>
+      <li>Quick-win strategies for team adoption</li>
+    </ul>
+    <h2 class="section-title">Session Example</h2>
+    <ol>
+      <li><strong>Client Journey Mapping</strong>: Visualize and fix every friction point, from first contact to retention.</li>
+      <li><strong>Complaint to Loyalty Lab</strong>: Turn “problems” into powerful retention moments.</li>
+      <li><strong>Proactive Service Playbook</strong>: Build a toolkit to exceed client expectations—every time.</li>
+    </ol>
+    <blockquote class="testimonial">
+      “After Max’s program, our NPS went up 16 points and we see a real culture shift in our client teams!”<br>
+      <span style="color:#222;">— Philippe Le Gigan, Supply Chain Manager</span>
+    </blockquote>
+    <div class="cta-buttons">
+      <a href="mailto:hello@maxengel.net?subject=Customer Centricity & Advanced Client Service - More Info">Get More Info</a>
+      <a href="https://calendly.com/max-engel-pro" class="cta-secondary" target="_blank" rel="noopener">Book a Call</a>
+    </div>
+    <p style="margin-top:3.3em;">
+      <a href="index.html#programs" style="color:#ff9142;">← Back to All Programs</a>
+    </p>
+  </main>
+  <footer style="text-align:center;max-width:720px;margin:1.6em auto 0 auto;font-size:1em;">
+    &copy; 2025 Max Engel. All rights reserved.
+  </footer>
 </body>
 </html>
