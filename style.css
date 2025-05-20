@@ -393,3 +393,15 @@ input#t4:checked ~ .slider-controls label[for="t4"] {
     grid-template-columns: 1fr;
   }
 }
+/* Désactive le soulignement et la couleur sur tous les liens dans .card */
+.card, .card *, .card a, .card a:visited, .card h3, .card h3 *, .card ul li, .card ul li a {
+  color: inherit !important;
+  text-decoration: none !important;
+  border-bottom: none !important;
+  box-shadow: none !important;
+}
+/* Option : si tu veux une couleur au hover sur les bullets */
+.card ul li a:hover {
+  color: #ff9142 !important;
+  text-decoration: underline !important;
+}
