@@ -2,16 +2,156 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Train the Trainer | Max Engel Training</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>High-Energy Training – Hero Vectoriel</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@700;600;400&family=Montserrat:wght@700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: radial-gradient(circle at 85% 0%, #ffae88 30%, #ffe3c3 85%);
+      font-family: 'Inter', sans-serif;
+      color: #202020;
+    }
+    .hero-slide {
+      position: relative;
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 48px 16px 32px 16px;
+      background: rgba(255,255,255,0.08);
+      box-sizing: border-box;
+      border-radius: 32px;
+      overflow: hidden;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .star-logo {
+      margin-top: 36px;
+      margin-bottom: 32px;
+      width: 130px;
+      height: 130px;
+      display: block;
+    }
+    .hero-title {
+      font-family: 'Montserrat', 'Inter', Arial, sans-serif;
+      font-weight: 700;
+      font-size: 2.1rem;
+      text-align: center;
+      margin-bottom: 16px;
+      letter-spacing: -1px;
+      line-height: 1.12;
+    }
+    .hero-sub {
+      font-size: 1.12rem;
+      font-weight: 500;
+      text-align: center;
+      margin-bottom: 24px;
+    }
+    .lang-box {
+      border: 2.5px solid #ffae88;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      padding: 8px 24px;
+      font-size: 1.06rem;
+      font-weight: 600;
+      background: #fffdfa90;
+      margin-bottom: 30px;
+      gap: 6px;
+    }
+    .lang-box span {
+      font-size: 1.18rem;
+      margin-right: 4px;
+      color: #e27c13;
+    }
+    .brand-logos-row {
+      width: 90%;
+      max-width: 540px;
+      margin: 28px auto 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 18px;
+      padding-bottom: 6px;
+      border-bottom: 2px solid #1a1a1a20;
+      position: relative;
+    }
+    .brand-logos-row svg {
+      width: 38px; height: 38px;
+      opacity: 0.8;
+    }
+    .arabesque-svg {
+      position: absolute;
+      bottom: -68px; left: -60px;
+      width: 400px;
+      height: 190px;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.9;
+    }
+    /* Responsive */
+    @media (max-width: 600px) {
+      .hero-slide { max-width: 98vw; border-radius: 0; min-height: 0;}
+      .star-logo { width: 80px; height: 80px; }
+      .hero-title { font-size: 1.25rem;}
+      .brand-logos-row { gap: 8px;}
+      .arabesque-svg { width: 250px; height: 90px; left: -35px; bottom: -36px;}
+    }
+  </style>
 </head>
 <body>
-  <header>
-    <h1>Train the Trainer</h1>
-    <p>
-      Empower your in-house trainers. This program delivers advanced facilitation methods, practical design thinking, and real engagement techniques to turn any subject-matter expert into an inspiring facilitator.
-    </p>
-    <a href="index.html" class="cta-secondary">Back to Home</a>
-  </header>
+  <div class="hero-slide">
+    <!-- Logo central "étoile" SVG -->
+    <svg class="star-logo" viewBox="0 0 150 150" fill="none">
+      <g>
+        <g>
+          <rect x="70" y="20" width="10" height="110" rx="4.5" fill="url(#grad)" />
+          <rect x="20" y="70" width="110" height="10" rx="4.5" fill="url(#grad)" />
+        </g>
+        <g>
+          <rect x="39" y="39" width="10" height="110" rx="4.5" transform="rotate(-45 39 39)" fill="url(#grad)" />
+          <rect x="101" y="39" width="10" height="110" rx="4.5" transform="rotate(45 101 39)" fill="url(#grad)" />
+        </g>
+      </g>
+      <defs>
+        <linearGradient id="grad" x1="0" y1="0" x2="150" y2="150" gradientUnits="userSpaceOnUse">
+          <stop stop-color="#f97316"/>
+          <stop offset="1" stop-color="#ffae88"/>
+        </linearGradient>
+      </defs>
+    </svg>
+
+    <div class="hero-title">
+      High-Energy Training That<br>
+      Boosts Sales and Leadership!
+    </div>
+
+    <div class="lang-box">
+      <span>🌐</span> Trainings available in 
+      <span>🇺🇸 English, 🇫🇷 French & 🇪🇸 Spanish.</span>
+    </div>
+
+    <div class="hero-sub" style="margin-top:12px; margin-bottom:8px;">
+      Trained teams at
+    </div>
+    <!-- Logos de marques, version SVG simplifiée -->
+    <div class="brand-logos-row">
+      <svg title="Apple" viewBox="0 0 48 48"><ellipse cx="24" cy="26" rx="13" ry="16" fill="#111"/><ellipse cx="32" cy="12" rx="4" ry="5" fill="#111"/></svg>
+      <svg title="Maersk" viewBox="0 0 48 48"><rect width="48" height="48" rx="10" fill="#79c7dd"/><polygon points="24,10 27,38 21,38" fill="#fff"/></svg>
+      <svg title="Hertz" viewBox="0 0 48 48"><rect width="48" height="20" y="14" rx="8" fill="#ffe066"/><rect width="48" height="8" y="32" fill="#222"/></svg>
+      <svg title="Henkel" viewBox="0 0 48 48"><ellipse cx="24" cy="24" rx="20" ry="12" fill="#f9dddd" stroke="#e11d48" stroke-width="2"/><text x="13" y="28" font-size="12" fill="#e11d48" font-family="Inter">Henkel</text></svg>
+      <svg title="Univar" viewBox="0 0 48 48"><rect width="48" height="48" rx="10" fill="#fff"/><rect x="14" y="20" width="20" height="8" fill="#111"/></svg>
+      <svg title="Occlutech" viewBox="0 0 48 48"><ellipse cx="24" cy="24" rx="19" ry="10" fill="#fff6e9" stroke="#111" stroke-width="2"/><rect x="19" y="16" width="10" height="16" fill="#fff" stroke="#111" stroke-width="2"/></svg>
+      <svg title="CNH" viewBox="0 0 48 48"><rect width="48" height="24" y="12" rx="8" fill="#eee"/><text x="10" y="30" font-size="16" fill="#222" font-family="Inter">CNH</text></svg>
+    </div>
+
+    <!-- Arabesque SVG en bas à gauche -->
+    <svg class="arabesque-svg" viewBox="0 0 400 200">
+      <path d="M20,160 Q160,10 370,180" fill="none" stroke="orange" stroke-width="18" opacity="0.6" />
+      <path d="M60,180 Q120,110 270,180" fill="none" stroke="#ffae88" stroke-width="6" opacity="0.85"/>
+    </svg>
+  </div>
 </body>
 </html>
