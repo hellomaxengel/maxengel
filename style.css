@@ -459,3 +459,12 @@ input#t4:checked ~ .slider-controls label[for="t4"] {
   text-decoration: none !important;
   color: inherit;
 }
+
+.card a,
+.card a:visited,
+.card ul li a,
+.card h3 {
+  text-decoration: none !important;
+  color: inherit !important;
+  border-bottom: none !important;
+}
