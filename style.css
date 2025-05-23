@@ -405,3 +405,32 @@ input#t4:checked ~ .slider-controls label[for="t4"] {
   color: #ff9142 !important;
   text-decoration: underline !important;
 }
+
+.about-max {
+  background: rgba(255, 246, 233, 0.92);   /* fond clair, harmonieux */
+  border-radius: 22px;
+  box-shadow: 0 8px 36px rgba(255, 174, 136, 0.13), 0 2px 12px rgba(0,0,0,0.06);
+  padding: 2.2rem 2.5rem 1.8rem 2.5rem;
+  margin-top: 1.7rem;
+  margin-bottom: 1.7rem;
+  max-width: 600px;
+  text-align: center;
+  transition: box-shadow 0.5s, transform 0.5s;
+}
+.about-max:hover {
+  box-shadow: 0 14px 52px rgba(255, 174, 136, 0.22), 0 8px 40px rgba(0,0,0,0.08);
+  transform: translateY(-5px) scale(1.013);
+}
+.about-max h2 {
+  color: #f97316;
+  font-size: 1.37rem;
+  font-weight: 700;
+  margin-bottom: 0.48em;
+  margin-top: 0;
+}
+.about-max p {
+  color: #31292e;
+  font-size: 1.09rem;
+  line-height: 1.55;
+  margin-bottom: 0.2em;
+}
