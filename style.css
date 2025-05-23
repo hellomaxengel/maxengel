@@ -1,4 +1,3 @@
-/* === Base & Reset === */
 body {
   margin: 0;
   font-family: 'Inter', Arial, sans-serif;
@@ -6,6 +5,7 @@ body {
   background: linear-gradient(to top right, #f6f6f6, #ffe3c3, #ffae88);
 }
 
+/* TITRES */
 h1, h2, h3 {
   font-family: 'Montserrat', 'Inter', Arial, sans-serif;
   font-weight: 700;
@@ -15,12 +15,11 @@ h1 { font-size: 2.7rem; }
 h2 { font-size: 2rem; }
 h3 { font-size: 1.25rem; }
 
-/* === Hero Banner === */
+/* BANNIÈRE */
 .banner-gradient-bg {
   padding: 48px 0 0 0;
   background: radial-gradient(ellipse 90% 75% at 50% 0%, #ffe3c3 90%, #ffae88 100%);
 }
-
 .banner-hero {
   width: 100%;
   max-width: 1300px;
@@ -42,27 +41,15 @@ h3 { font-size: 1.25rem; }
   display: block;
 }
 
-/* === Vidéo === */
-.video-wrapper {
+/* VIDÉO */
+.video-section {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin: 2.5rem auto 3rem auto;
-  max-width: 1300px;
+  margin: 2.5rem auto 2.2rem auto;
   width: 100%;
 }
-.video-wrapper video {
-  width: 90vw;
-  max-width: 480px;
-  border-radius: 1rem;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-  background: #fff6e9;
-  object-fit: contain;
-  display: block;
-  margin: 0 auto;
-}
-
 .video-title {
   font-size: 1.22rem;
   font-family: 'Montserrat', sans-serif;
@@ -80,9 +67,8 @@ h3 { font-size: 1.25rem; }
   line-height: 1.5;
 }
 
-/* === Meet Max / Testimonial Cards Premium === */
-.about-max,
-.testimonial-card {
+/* ABOUT MAX - même effet carte que testimonials */
+.about-max {
   background: #fff8f2;
   border-radius: 32px;
   max-width: 1080px;
@@ -90,20 +76,19 @@ h3 { font-size: 1.25rem; }
   padding: 3.2rem 2.4rem;
   box-shadow: 0 6px 36px #fcb47d23, 0 1.5px 8px #0001;
   transition: box-shadow 0.5s, transform 0.5s;
-  text-align: left;
-  display: flex;
-  gap: 3.2rem;
-  align-items: center;
-  justify-content: center;
 }
 .about-max:hover,
 .testimonial-card:hover {
   box-shadow: 0 14px 52px rgba(255, 174, 136, 0.22), 0 8px 40px rgba(0,0,0,0.08);
   transform: translateY(-5px) scale(1.013);
 }
-
-.about-max-photo,
-.testimonial-photo {
+.about-max-grid {
+  display: flex;
+  gap: 3.2rem;
+  align-items: center;
+  justify-content: center;
+}
+.about-max-photo {
   width: 190px;
   height: 190px;
   border-radius: 50%;
@@ -114,35 +99,26 @@ h3 { font-size: 1.25rem; }
   flex-shrink: 0;
   display: block;
 }
-
-.about-max-bio,
-.testimonial-content {
+.about-max-bio {
   flex: 1 1 0;
   text-align: left;
 }
-
-.about-max-bio h2,
-.testimonial-content h2 {
+.about-max-bio h2 {
   font-size: 2.2rem;
   font-family: 'Montserrat', sans-serif;
   font-weight: 700;
   margin-top: 0;
   margin-bottom: 1.3rem;
   text-align: left;
-  color: #f97316;
 }
-
-.about-max-bio p,
-.testimonial-content p {
+.about-max-bio p {
   font-size: 1.24rem;
   margin-bottom: 1.2rem;
   color: #1e2732;
   font-weight: 500;
   line-height: 1.48;
 }
-
-.about-max-bio ul,
-.testimonial-content ul {
+.about-max-bio ul {
   margin: 0;
   padding-left: 1.3em;
   color: #784619;
@@ -150,68 +126,45 @@ h3 { font-size: 1.25rem; }
   font-weight: 500;
   line-height: 1.62;
 }
+@media (max-width: 800px) {
+  .about-max-grid { flex-direction: column; gap: 2rem; }
+  .about-max-photo { margin-bottom: 0.8rem; }
+  .about-max-bio h2, .about-max-bio { text-align: center; }
+}
 
-/* Pour le témoignage carousel quand slider seul */
+/* TESTIMONIALS SLIDER */
 .testimonials-slider {
   max-width: 1080px;
   margin: 3.5rem auto 4.5rem auto;
   text-align: center;
   padding: 0 1rem 0 1rem;
 }
-
-@media (max-width: 900px) {
-  .about-max,
-  .testimonial-card,
-  .testimonials-slider {
-    max-width: 98vw;
-    flex-direction: column;
-    align-items: center;
-    padding: 2rem 0.6rem;
-    gap: 2rem;
-  }
+.testimonials-slider h2 {
+  font-size: 2rem;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  margin-bottom: 2.2rem;
 }
 
-@media (max-width: 600px) {
-  .about-max,
-  .testimonial-card,
-  .testimonials-slider {
-    padding: 1.3rem 0.3rem;
-    border-radius: 18px;
-    gap: 1.1rem;
-  }
-  .about-max-photo,
-  .testimonial-photo {
-    width: 115px;
-    height: 115px;
-    border-width: 4px;
-  }
-  .about-max-bio h2,
-  .testimonial-content h2 {
-    font-size: 1.2rem;
-    margin-bottom: 0.6rem;
-  }
-  .about-max-bio p,
-  .testimonial-content p {
-    font-size: 1rem;
-  }
-}
-
-blockquote {
-  margin: 0 0 1.7rem 0;
-  font-size: 1.15rem;
-  font-style: italic;
-  color: #222;
-  position: relative;
-  z-index: 2;
-  white-space: normal;
-  word-break: break-word;
-  overflow-wrap: break-word;
+/* Harmonise la carte témoignage avec .about-max */
+.testimonial-card {
+  background: #fff8f2 !important;
+  border-radius: 32px !important;
+  box-shadow: 0 6px 36px #fcb47d23, 0 1.5px 8px #0001;
+  padding: 2.5rem 2.3rem 2.2rem 2.3rem;
+  margin: 0 auto 2rem auto;
+  max-width: 1080px;
   text-align: left;
-  line-height: 1.55;
+  transition: box-shadow 0.5s, transform 0.5s;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
 }
 
-/* --- Slider carousel interne (pour contenu alternatif) --- */
+/* SLIDER FUNCTION */
 .slider {
+  position: relative;
   width: 100%;
   min-height: 260px;
 }
@@ -229,17 +182,7 @@ input[type="radio"][name="slider"] { display: none; }
   transition: opacity 0.55s, transform 0.55s;
   position: absolute;
   left: 0; top: 0;
-  background: transparent;
-  border-radius: 0;
-  padding: 0;
   z-index: 2;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  box-sizing: border-box;
-  white-space: normal;
-  word-break: break-word;
-  overflow-wrap: break-word;
 }
 input#t1:checked ~ .slides label:nth-child(1),
 input#t2:checked ~ .slides label:nth-child(2),
@@ -251,17 +194,39 @@ input#t4:checked ~ .slides label:nth-child(4) {
   transform: scale(1) translateY(0);
   z-index: 3;
 }
-
-.testimonial-card .testimonial-author {
+.slide blockquote {
+  margin: 0 0 2.2rem 0;
+  font-size: 1.18rem;
+  font-style: italic;
+  color: #222;
+  position: relative;
+  z-index: 2;
+  background: none;
+  box-shadow: none;
+  text-align: left;
+  line-height: 1.5;
+}
+.testimonial-quote {
+  font-size: 3.5rem;
+  color: #ffae88;
+  line-height: 1;
+  position: absolute;
+  left: 24px;
+  top: 6px;
+  opacity: 0.18;
+  z-index: 1;
+  font-family: 'Montserrat', serif;
+}
+.testimonial-author {
   display: flex;
   align-items: center;
   justify-content: flex-start;
   gap: 1.1rem;
   font-size: 1.05rem;
   font-weight: 500;
-  margin-top: 1.1rem;
+  margin-top: 1.2rem;
 }
-.testimonial-card .testimonial-initial {
+.testimonial-initial {
   display: inline-flex;
   width: 38px;
   height: 38px;
@@ -275,7 +240,6 @@ input#t4:checked ~ .slides label:nth-child(4) {
   margin-right: 0.3rem;
   background: #111;
 }
-
 .slider-controls {
   margin: 0.8rem 0 0 0;
   display: flex;
@@ -302,102 +266,22 @@ input#t4:checked ~ .slider-controls label[for="t4"] {
   border: 2px solid #f97316;
   box-shadow: 0 0 0 2px #fff3, 0 2px 8px #f9731652;
 }
-
-.mt-4 { margin-top: 1.5rem; }
-
-/* --- Other sections (cards grid, action photo, etc.) sont inchangés, tu peux les garder. --- */
-.card-grid-2x2 {
-  display: grid;
-  gap: 2rem;
-  grid-template-columns: repeat(2, 1fr);
-  margin: 2.5rem auto 0 auto;
-  max-width: 950px;
+@media (max-width: 1100px) {
+  .about-max,
+  .testimonial-card,
+  .testimonials-slider {
+    max-width: 94vw;
+    padding: 1.5rem 0.7rem 1.1rem 0.7rem;
+  }
 }
 @media (max-width: 700px) {
-  .card-grid-2x2 { grid-template-columns: 1fr; }
+  .slide { padding: 1.1rem 0.4rem 1rem 0.4rem; font-size: 0.99rem; }
+  .testimonials-slider h2 { font-size: 1.4rem;}
+  .testimonial-quote { font-size: 2.2rem; left: 10px;}
+  blockquote { font-size: 0.98rem; }
 }
 
-.card {
-  background: white;
-  padding: 1.7rem 1.2rem 1.2rem 1.2rem;
-  border-radius: 1.25rem;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.07);
-  text-align: left;
-  position: relative;
-  transition: box-shadow 0.4s, transform 0.35s;
-  overflow: hidden;
-  border: 1.5px solid #ffe3c3;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  min-height: 370px;
-  cursor: pointer;
-}
-.card:hover, .card:focus {
-  box-shadow: 0 16px 48px rgba(255, 148, 64, 0.22), 0 4px 28px rgba(0,0,0,0.11);
-  transform: translateY(-6px) scale(1.02);
-}
-.card h3 {
-  margin: 0.2em 0 0.4em 0;
-  font-family: 'Montserrat', sans-serif;
-  font-size: 1.2rem;
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  gap: 0.7em;
-}
-.card h3 img, .card h3 svg {
-  display: inline-block;
-  width: 28px;
-  height: 28px;
-  vertical-align: middle;
-  margin-right: 0.5em;
-}
-.card p {
-  color: #634000;
-  font-size: 1rem;
-  margin-bottom: 0.7em;
-  margin-top: 0.15em;
-}
-.card ul {
-  list-style: disc inside;
-  margin: 0.6rem 0 0.2rem 0;
-  padding: 0;
-  color: #8b5c2a;
-  font-size: 1.01rem;
-  z-index: 2;
-  position: relative;
-}
-.card ul li {
-  margin-bottom: 0.4em;
-  text-decoration: none;
-}
-.card ul li a,
-.card ul li a:visited,
-.card h3,
-.card h3 *,
-.card p {
-  text-decoration: none !important;
-  border-bottom: none !important;
-  box-shadow: none !important;
-  color: inherit !important;
-}
-.card ul li a:hover,
-.card ul li a:focus {
-  color: #ff9142 !important;
-  text-decoration: underline !important;
-}
-.card-bg {
-  position: absolute;
-  bottom: 10px; right: 10px;
-  width: 56px; height: 56px;
-  z-index: 0;
-  opacity: 0.12;
-  pointer-events: none;
-}
-.card:hover .card-bg {
-  opacity: 0.17;
-}
+.mt-4 { margin-top: 1.5rem; }
 
 header, section, footer {
   padding: 3rem 1.5rem;
@@ -413,19 +297,24 @@ header, section, footer {
   text-decoration: none;
   font-weight: 600;
 }
-.cta-primary {
-  background-color: #f97316;
-  color: white;
-}
-.cta-secondary {
-  border: 2px solid #f97316;
-  color: #f97316;
-}
+.cta-primary { background-color: #f97316; color: white; }
+.cta-secondary { border: 2px solid #f97316; color: #f97316; }
 footer {
   font-size: 0.875rem;
   padding-bottom: 2rem;
 }
-footer a {
-  color: #1f2937;
-  text-decoration: underline;
+footer a { color: #1f2937; text-decoration: underline; }
+
+/* ... le reste de tes styles ... */
+
+/* Désactive le soulignement et la couleur sur tous les liens dans .card */
+.card, .card *, .card a, .card a:visited, .card h3, .card h3 *, .card ul li, .card ul li a {
+  color: inherit !important;
+  text-decoration: none !important;
+  border-bottom: none !important;
+  box-shadow: none !important;
+}
+.card ul li a:hover {
+  color: #ff9142 !important;
+  text-decoration: underline !important;
 }
