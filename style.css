@@ -130,6 +130,7 @@ h3 { font-size: 1.25rem; }
   align-items: flex-start;
   min-height: 370px;
   cursor: pointer;
+  aspect-ratio: 1.35 / 1;
 }
 .card:hover, .card:focus {
   box-shadow: 0 16px 48px rgba(255, 148, 64, 0.22), 0 4px 28px rgba(0,0,0,0.11);
