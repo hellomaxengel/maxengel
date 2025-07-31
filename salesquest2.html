@@ -5,345 +5,195 @@
     <meta name="viewport" content="width=900, initial-scale=1.0">
     <title>Sales Quest: The AI Awakening</title>
     <style>
-        /* [Styles identiques à ton code initial : tu peux garder ou adapter, c'est clean.] */
+        body {
+            margin: 0;
+            padding: 0;
+            background: #1a1a2e;
+            color: #eee;
+            font-family: 'Courier New', monospace;
+            overflow: hidden;
+        }
+        #gameContainer {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+            background: linear-gradient(135deg, #0f3460 0%, #16213e 100%);
+        }
+        #gameCanvas {
+            border: 2px solid #4a90e2;
+            background: #2d3748;
+            display: block;
+            margin: 20px auto;
+        }
+        #ui {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: 100;
+            background: rgba(0,0,0,0.8);
+            padding: 15px;
+            border-radius: 8px;
+            border: 2px solid #4a90e2;
+            min-width: 200px;
+        }
+        #dialogue {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            background: rgba(0,0,0,0.9);
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid #4a90e2;
+            display: none;
+        }
+        #controls {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(0,0,0,0.8);
+            padding: 15px;
+            border-radius: 8px;
+            border: 2px solid #4a90e2;
+            font-size: 12px;
+        }
+        #bossInfo {
+            position: absolute;
+            top: 200px;
+            right: 10px;
+            background: rgba(0,0,0,0.8);
+            padding: 15px;
+            border-radius: 8px;
+            border: 2px solid #ff4757;
+            display: none;
+            min-width: 180px;
+        }
+        .health-bar {
+            width: 200px;
+            height: 20px;
+            background: #333;
+            border: 2px solid #4a90e2;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 5px 0;
+        }
+        .health-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ff6b6b 0%, #4ecdc4 100%);
+            transition: width 0.3s ease;
+        }
+        .boss-health-bar {
+            width: 150px;
+            height: 15px;
+            background: #333;
+            border: 2px solid #ff4757;
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 5px 0;
+        }
+        .boss-health-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ff4757 0%, #ff3838 100%);
+            transition: width 0.3s ease;
+        }
+        #gameTitle {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 200;
+        }
+        h1 {
+            font-size: 48px;
+            margin: 0;
+            text-shadow: 0 0 20px #4a90e2;
+            background: linear-gradient(45deg, #4a90e2, #e74c3c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .start-btn {
+            background: linear-gradient(45deg, #4a90e2, #e74c3c);
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 20px;
+            font-family: inherit;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .start-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(74, 144, 226, 0.4);
+        }
+        .victory-screen {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0,0,0,0.95);
+            padding: 40px;
+            border-radius: 15px;
+            border: 3px solid #4ecdc4;
+            text-align: center;
+            display: none;
+            z-index: 300;
+        }
     </style>
 </head>
 <body>
     <div id="gameContainer">
-        <!-- [Tout ton HTML d'origine, inchangé] -->
-        <!-- ... -->
+        <div id="gameTitle">
+            <h1>Sales Quest</h1>
+            <p style="font-size: 20px; margin: 10px 0;">The AI Awakening</p>
+            <p style="font-size: 14px; opacity: 0.8;">10 Boss IA à combattre • Style Zelda • Clavier requis</p>
+            <button class="start-btn" onclick="startGame()">Commencer l'Aventure</button>
+        </div>
+        <canvas id="gameCanvas" width="900" height="700" style="display: none;"></canvas>
+        <div id="ui" style="display: none;">
+            <div><strong>Commercial Niveau:</strong> <span id="level">1</span></div>
+            <div><strong>Expérience:</strong> <span id="exp">0</span>/<span id="expMax">100</span></div>
+            <div><strong>Santé:</strong></div>
+            <div class="health-bar">
+                <div class="health-fill" id="healthFill" style="width: 100%;"></div>
+            </div>
+            <div><strong>Arme:</strong> <span id="currentSkill">Épée d'Empathie</span></div>
+            <div><strong>Boss Vaincus:</strong> <span id="bossCount">0</span>/10</div>
+        </div>
+        <div id="bossInfo">
+            <div><strong id="bossName">Boss IA</strong></div>
+            <div class="boss-health-bar">
+                <div class="boss-health-fill" id="bossHealthFill" style="width: 100%;"></div>
+            </div>
+            <div id="bossDescription"></div>
+        </div>
+        <div id="controls" style="display: none;">
+            <strong>Contrôles:</strong><br>
+            WASD - Bouger<br>
+            ESPACE - Attaquer<br>
+            SHIFT - Esquiver<br>
+            E - Interagir<br>
+            R - Compétence spéciale
+        </div>
+        <div id="dialogue">
+            <div id="dialogueText"></div>
+            <div style="text-align: right; font-size: 12px; opacity: 0.7; margin-top: 10px;">
+                [ESPACE pour continuer]
+            </div>
+        </div>
+        <div class="victory-screen" id="victoryScreen">
+            <h2 style="color: #4ecdc4; margin-top: 0;">🎉 VICTOIRE TOTALE! 🎉</h2>
+            <p>Vous avez vaincu tous les 10 Boss IA!</p>
+            <p>Vous avez prouvé que l'humain et l'IA peuvent collaborer!</p>
+            <button class="start-btn" onclick="location.reload()">Rejouer</button>
+        </div>
     </div>
-    <script>
-        // --- STATE ---
-        let gameState = {
-            scene: 'title',
-            currentBossIndex: 0,
-            bossesDefeated: 0,
-            player: {
-                x: 450, y: 350,
-                health: 100, maxHealth: 100,
-                level: 1, exp: 0, expToNext: 100,
-                facing: 'down',
-                attacking: false,
-                dodging: false,
-                invulnerable: false,
-                specialCooldown: 0
-            },
-            currentBoss: null,
-            projectiles: [],
-            bosses: [
-                /* [Tous tes boss, inchangés] */
-                // (cf. code initial, pour la longueur je coupe ici)
-            ],
-            keys: {},
-            dialogue: { active: false, text: '', index: 0, queue: [] }
-        };
-
-        // --- SETUP ---
-        const canvas = document.getElementById('gameCanvas');
-        const ctx = canvas.getContext('2d');
-
-        // --- INPUT ---
-        document.addEventListener('keydown', (e) => {
-            gameState.keys[e.code] = true;
-            handleKeyPress(e.code);
-        });
-        document.addEventListener('keyup', (e) => {
-            gameState.keys[e.code] = false;
-        });
-
-        function handleKeyPress(key) {
-            if (gameState.dialogue.active) {
-                if (key === 'Space' || key === 'Enter') nextDialogue();
-                return;
-            }
-            if (key === 'KeyE') interact();
-            if (key === 'KeyR') useSpecialAbility();
-        }
-
-        // --- START GAME ---
-        function startGame() {
-            document.getElementById('gameTitle').style.display = 'none';
-            document.getElementById('gameCanvas').style.display = 'block';
-            document.getElementById('ui').style.display = 'block';
-            document.getElementById('controls').style.display = 'block';
-            gameState.scene = 'office';
-            showDialogue([
-                "Bienvenue chez MegaCorp Sales Division, année 2024...",
-                "Vous êtes le top performer depuis 5 ans.",
-                "Mais quelque chose d'étrange arrive aux outils IA...",
-                "Ils deviennent... conscients d'eux-mêmes.",
-                "10 Boss IA vous attendent dans cette bataille épique!",
-                "Utilisez WASD pour bouger, ESPACE pour attaquer.",
-                "SHIFT pour esquiver, E pour interagir, R pour compétence spéciale.",
-                "Votre premier défi vous attend..."
-            ]);
-            setTimeout(spawnNextBoss, 12000);
-            requestAnimationFrame(gameLoop);
-        }
-
-        // --- BOSS MANAGEMENT ---
-        function spawnNextBoss() {
-            if (gameState.currentBossIndex < gameState.bosses.length) {
-                const boss = gameState.bosses[gameState.currentBossIndex];
-                boss.active = true; boss.health = boss.maxHealth;
-                gameState.currentBoss = boss;
-                document.getElementById('bossInfo').style.display = 'block';
-                document.getElementById('bossName').textContent = boss.name;
-                document.getElementById('bossDescription').textContent = boss.description;
-                showDialogue(boss.dialogue);
-            }
-        }
-
-        // --- DIALOGUE ---
-        function showDialogue(messages) {
-            gameState.dialogue.active = true;
-            gameState.dialogue.queue = messages;
-            gameState.dialogue.index = 0;
-            nextDialogue();
-        }
-        function nextDialogue() {
-            if (gameState.dialogue.index < gameState.dialogue.queue.length) {
-                document.getElementById('dialogueText').textContent = gameState.dialogue.queue[gameState.dialogue.index];
-                document.getElementById('dialogue').style.display = 'block';
-                gameState.dialogue.index++;
-            } else endDialogue();
-        }
-        function endDialogue() {
-            gameState.dialogue.active = false;
-            document.getElementById('dialogue').style.display = 'none';
-        }
-
-        // --- INTERACTIONS ---
-        function interact() {
-            if (!gameState.currentBoss || !gameState.currentBoss.active) return;
-            const boss = gameState.currentBoss;
-            const distance = Math.hypot(gameState.player.x - boss.x, gameState.player.y - boss.y);
-            if (distance < 120 && !gameState.dialogue.active) showDialogue(boss.dialogue);
-        }
-
-        function useSpecialAbility() {
-            if (gameState.player.specialCooldown > 0) return;
-            gameState.player.health = Math.min(gameState.player.maxHealth, gameState.player.health + 30);
-            if (gameState.currentBoss && gameState.currentBoss.active) {
-                const distance = Math.hypot(gameState.player.x - gameState.currentBoss.x, gameState.player.y - gameState.currentBoss.y);
-                if (distance < 150) gameState.currentBoss.health -= 40;
-            }
-            gameState.player.specialCooldown = 300; // 5s cooldown (60fps)
-        }
-
-        // --- GAMELOOP ---
-        function gameLoop() {
-            updatePlayer();
-            updateBoss();
-            updateProjectiles();
-            render();
-            updateUI();
-            if (gameState.player.health > 0)
-                requestAnimationFrame(gameLoop);
-            else
-                gameOver();
-        }
-
-        // --- PLAYER UPDATE ---
-        function updatePlayer() {
-            if (gameState.dialogue.active) return;
-            const player = gameState.player;
-            const speed = 4 + (player.dodging ? 3 : 0);
-            if (gameState.keys['KeyW'] || gameState.keys['ArrowUp']) { player.y = Math.max(50, player.y - speed); player.facing = 'up'; }
-            if (gameState.keys['KeyS'] || gameState.keys['ArrowDown']) { player.y = Math.min(650, player.y + speed); player.facing = 'down'; }
-            if (gameState.keys['KeyA'] || gameState.keys['ArrowLeft']) { player.x = Math.max(50, player.x - speed); player.facing = 'left'; }
-            if (gameState.keys['KeyD'] || gameState.keys['ArrowRight']) { player.x = Math.min(850, player.x + speed); player.facing = 'right'; }
-
-            if (gameState.keys['Space'] && !player.attacking) {
-                player.attacking = true;
-                setTimeout(() => { player.attacking = false; }, 300);
-                checkAttackHit();
-            }
-            if ((gameState.keys['ShiftLeft'] || gameState.keys['ShiftRight']) && !player.dodging) {
-                player.dodging = true; player.invulnerable = true;
-                setTimeout(() => { player.dodging = false; player.invulnerable = false; }, 500);
-            }
-            if (player.specialCooldown > 0) player.specialCooldown = Math.max(0, player.specialCooldown - 1);
-        }
-
-        // --- BOSS UPDATE ---
-        function updateBoss() {
-            if (!gameState.currentBoss || !gameState.currentBoss.active) return;
-            const boss = gameState.currentBoss;
-            boss.attackCooldown--; boss.movePattern++;
-            // Déplacement boss
-            switch(boss.attackPattern) {
-                case 'inbound': boss.x += Math.sin(boss.movePattern * 0.02) * 2; break;
-                case 'predictive': if (boss.movePattern % 120 === 0) { boss.x = gameState.player.x + (Math.random() - 0.5) * 200; boss.y = gameState.player.y + (Math.random() - 0.5) * 200; } break;
-                case 'sound': boss.y += Math.cos(boss.movePattern * 0.03) * 1.5; break;
-                case 'waves': boss.x += Math.sin(boss.movePattern * 0.01) * 3; boss.y += Math.cos(boss.movePattern * 0.02) * 2; break;
-            }
-            boss.x = Math.max(100, Math.min(800, boss.x));
-            boss.y = Math.max(100, Math.min(600, boss.y));
-            if (boss.attackCooldown <= 0) { executeAttack(boss); boss.attackCooldown = 90 + Math.random() * 60; }
-        }
-
-        function executeAttack(boss) {
-            const distance = Math.hypot(gameState.player.x - boss.x, gameState.player.y - boss.y);
-            switch(boss.attackPattern) {
-                case 'inbound': for (let i = -2; i <= 2; i++) createProjectile(boss.x, boss.y, i * 0.5, boss.color); break;
-                case 'predictive': const fx = gameState.player.x + (Math.random() - 0.5) * 100, fy = gameState.player.y + (Math.random() - 0.5) * 100;
-                    createProjectile(boss.x, boss.y, Math.atan2(fy - boss.y, fx - boss.x), boss.color); break;
-                case 'sound': if (distance < 150 && !gameState.player.invulnerable) gameState.player.health = Math.max(0, gameState.player.health - 12); break;
-                default: if (distance < 300) { const a = Math.atan2(gameState.player.y - boss.y, gameState.player.x - boss.x); createProjectile(boss.x, boss.y, a, boss.color); } break;
-            }
-        }
-
-        // --- ATTAQUES & PROJECTILES ---
-        function checkAttackHit() {
-            if (!gameState.currentBoss || !gameState.currentBoss.active) return;
-            const boss = gameState.currentBoss;
-            const distance = Math.hypot(gameState.player.x - boss.x, gameState.player.y - boss.y);
-            if (distance < 100) {
-                const damage = 20 + (gameState.player.level * 5);
-                boss.health -= damage;
-                if (boss.health <= 0) defeatBoss();
-            }
-        }
-
-        function createProjectile(x, y, angle, color) {
-            gameState.projectiles.push({
-                x: x, y: y,
-                vx: Math.cos(angle) * 3,
-                vy: Math.sin(angle) * 3,
-                color: color,
-                life: 200
-            });
-        }
-
-        function updateProjectiles() {
-            gameState.projectiles = gameState.projectiles.filter(proj => {
-                proj.x += proj.vx; proj.y += proj.vy; proj.life--;
-                // Collision avec le joueur
-                const distance = Math.hypot(gameState.player.x - proj.x, gameState.player.y - proj.y);
-                if (distance < 25 && !gameState.player.invulnerable) {
-                    gameState.player.health = Math.max(0, gameState.player.health - 16);
-                    proj.life = 0; // détruire projectile
-                }
-                // On retire le projectile si hors écran ou dead
-                return proj.life > 0 && proj.x > 0 && proj.x < canvas.width && proj.y > 0 && proj.y < canvas.height;
-            });
-        }
-
-        // --- BOSS DEFEAT & VICTORY ---
-        function defeatBoss() {
-            if (!gameState.currentBoss) return;
-            gameState.currentBoss.active = false;
-            gameState.bossesDefeated++;
-            const expGain = 80 + (gameState.currentBossIndex * 20);
-            gameState.player.exp += expGain;
-            // Level up ?
-            if (gameState.player.exp >= gameState.player.expToNext) {
-                gameState.player.level++;
-                gameState.player.exp = 0;
-                gameState.player.expToNext += 50;
-                gameState.player.maxHealth += 25;
-                gameState.player.health = gameState.player.maxHealth;
-                showDialogue([
-                    `${gameState.currentBoss.name} vaincu!`,
-                    "Vous avez appris à collaborer avec cette IA!",
-                    `NIVEAU ${gameState.player.level}! Santé augmentée!`,
-                    `Boss restants: ${gameState.bosses.length - gameState.bossesDefeated}`
-                ]);
-            } else {
-                showDialogue([
-                    `${gameState.currentBoss.name} vaincu!`,
-                    "L'humain et l'IA peuvent coexister!",
-                    `Boss restants: ${gameState.bosses.length - gameState.bossesDefeated}`
-                ]);
-            }
-            document.getElementById('bossInfo').style.display = 'none';
-            gameState.currentBossIndex++;
-            if (gameState.bossesDefeated >= gameState.bosses.length) {
-                setTimeout(() => { document.getElementById('victoryScreen').style.display = 'block'; }, 3000);
-            } else {
-                setTimeout(spawnNextBoss, 4000);
-            }
-        }
-
-        function gameOver() {
-            showDialogue([
-                "GAME OVER !",
-                "L'IA a pris le contrôle...",
-                "Recharge la page pour recommencer."
-            ]);
-        }
-
-        // --- RENDU CANVAS ---
-        function render() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            // Fond
-            ctx.fillStyle = "#2d3748";
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-            // Projectiles
-            gameState.projectiles.forEach(proj => {
-                ctx.beginPath();
-                ctx.arc(proj.x, proj.y, 10, 0, 2 * Math.PI);
-                ctx.fillStyle = proj.color;
-                ctx.globalAlpha = 0.8;
-                ctx.fill();
-                ctx.globalAlpha = 1.0;
-            });
-
-            // Boss
-            if (gameState.currentBoss && gameState.currentBoss.active) {
-                ctx.beginPath();
-                ctx.arc(gameState.currentBoss.x, gameState.currentBoss.y, 36, 0, 2 * Math.PI);
-                ctx.fillStyle = gameState.currentBoss.color;
-                ctx.fill();
-                // Boss name
-                ctx.font = "18px Courier New";
-                ctx.fillStyle = "#fff";
-                ctx.textAlign = "center";
-                ctx.fillText(gameState.currentBoss.name, gameState.currentBoss.x, gameState.currentBoss.y - 48);
-            }
-
-            // Joueur
-            ctx.save();
-            ctx.beginPath();
-            ctx.arc(gameState.player.x, gameState.player.y, 22, 0, 2 * Math.PI);
-            ctx.fillStyle = gameState.player.dodging ? "#ffe66d" : "#4ecdc4";
-            ctx.fill();
-            ctx.restore();
-
-            // Animation attaque
-            if (gameState.player.attacking) {
-                ctx.save();
-                ctx.strokeStyle = "#ff6b6b";
-                ctx.lineWidth = 7;
-                let dx = 0, dy = 0;
-                switch(gameState.player.facing) {
-                    case 'up': dy = -35; break;
-                    case 'down': dy = 35; break;
-                    case 'left': dx = -35; break;
-                    case 'right': dx = 35; break;
-                }
-                ctx.beginPath();
-                ctx.moveTo(gameState.player.x, gameState.player.y);
-                ctx.lineTo(gameState.player.x + dx, gameState.player.y + dy);
-                ctx.stroke();
-                ctx.restore();
-            }
-        }
-
-        // --- UI DYNAMIQUE ---
-        function updateUI() {
-            document.getElementById('level').textContent = gameState.player.level;
-            document.getElementById('exp').textContent = gameState.player.exp;
-            document.getElementById('expMax').textContent = gameState.player.expToNext;
-            document.getElementById('healthFill').style.width = (100 * gameState.player.health / gameState.player.maxHealth) + "%";
-            document.getElementById('bossCount').textContent = gameState.bossesDefeated;
-            if (gameState.currentBoss)
-                document.getElementById('bossHealthFill').style.width = (100 * gameState.currentBoss.health / gameState.currentBoss.maxHealth) + "%";
-        }
-    </script>
+    <!-- Ton script JS complet ici, voir version précédente, boss data à compléter -->
+    <!-- ... -->
 </body>
 </html>
