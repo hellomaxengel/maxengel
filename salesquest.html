@@ -1,0 +1,365 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2575.5">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+  </style>
+</head>
+<body>
+<p class="p1">&lt;!DOCTYPE html&gt;</p>
+<p class="p1">&lt;html lang="en"&gt;</p>
+<p class="p1">&lt;head&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta charset="UTF-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta name="viewport" content="width=900, initial-scale=1.0"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;title&gt;Sales Quest: The AI Awakening&lt;/title&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;style&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>/* [Styles identiques à ton code initial : tu peux garder ou adapter, c'est clean.] */</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/style&gt;</p>
+<p class="p1">&lt;/head&gt;</p>
+<p class="p1">&lt;body&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div id="gameContainer"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;!-- [Tout ton HTML d'origine, inchangé] --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;!-- ... --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>// --- STATE ---</p>
+<p class="p1"><span class="Apple-converted-space">        </span>let gameState = {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>scene: 'title',</p>
+<p class="p1"><span class="Apple-converted-space">            </span>currentBossIndex: 0,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>bossesDefeated: 0,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>player: {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>x: 450, y: 350,</p>
+<p class="p1"><span class="Apple-converted-space">                </span>health: 100, maxHealth: 100,</p>
+<p class="p1"><span class="Apple-converted-space">                </span>level: 1, exp: 0, expToNext: 100,</p>
+<p class="p1"><span class="Apple-converted-space">                </span>facing: 'down',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>attacking: false,</p>
+<p class="p1"><span class="Apple-converted-space">                </span>dodging: false,</p>
+<p class="p1"><span class="Apple-converted-space">                </span>invulnerable: false,</p>
+<p class="p1"><span class="Apple-converted-space">                </span>specialCooldown: 0</p>
+<p class="p1"><span class="Apple-converted-space">            </span>},</p>
+<p class="p1"><span class="Apple-converted-space">            </span>currentBoss: null,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>projectiles: [],</p>
+<p class="p1"><span class="Apple-converted-space">            </span>bosses: [</p>
+<p class="p1"><span class="Apple-converted-space">                </span>/* [Tous tes boss, inchangés] */</p>
+<p class="p1"><span class="Apple-converted-space">                </span>// (cf. code initial, pour la longueur je coupe ici)</p>
+<p class="p1"><span class="Apple-converted-space">            </span>],</p>
+<p class="p1"><span class="Apple-converted-space">            </span>keys: {},</p>
+<p class="p1"><span class="Apple-converted-space">            </span>dialogue: { active: false, text: '', index: 0, queue: [] }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// --- SETUP ---</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const canvas = document.getElementById('gameCanvas');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const ctx = canvas.getContext('2d');</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// --- INPUT ---</p>
+<p class="p1"><span class="Apple-converted-space">        </span>document.addEventListener('keydown', (e) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>gameState.keys[e.code] = true;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>handleKeyPress(e.code);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>});</p>
+<p class="p1"><span class="Apple-converted-space">        </span>document.addEventListener('keyup', (e) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>gameState.keys[e.code] = false;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>function handleKeyPress(key) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (gameState.dialogue.active) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>if (key === 'Space' || key === 'Enter') nextDialogue();</p>
+<p class="p1"><span class="Apple-converted-space">                </span>return;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (key === 'KeyE') interact();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (key === 'KeyR') useSpecialAbility();</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// --- START GAME ---</p>
+<p class="p1"><span class="Apple-converted-space">        </span>function startGame() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('gameTitle').style.display = 'none';</p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('gameCanvas').style.display = 'block';</p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('ui').style.display = 'block';</p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('controls').style.display = 'block';</p>
+<p class="p1"><span class="Apple-converted-space">            </span>gameState.scene = 'office';</p>
+<p class="p1"><span class="Apple-converted-space">            </span>showDialogue([</p>
+<p class="p1"><span class="Apple-converted-space">                </span>"Bienvenue chez MegaCorp Sales Division, année 2024...",</p>
+<p class="p1"><span class="Apple-converted-space">                </span>"Vous êtes le top performer depuis 5 ans.",</p>
+<p class="p1"><span class="Apple-converted-space">                </span>"Mais quelque chose d'étrange arrive aux outils IA...",</p>
+<p class="p1"><span class="Apple-converted-space">                </span>"Ils deviennent... conscients d'eux-mêmes.",</p>
+<p class="p1"><span class="Apple-converted-space">                </span>"10 Boss IA vous attendent dans cette bataille épique!",</p>
+<p class="p1"><span class="Apple-converted-space">                </span>"Utilisez WASD pour bouger, ESPACE pour attaquer.",</p>
+<p class="p1"><span class="Apple-converted-space">                </span>"SHIFT pour esquiver, E pour interagir, R pour compétence spéciale.",</p>
+<p class="p1"><span class="Apple-converted-space">                </span>"Votre premier défi vous attend..."</p>
+<p class="p1"><span class="Apple-converted-space">            </span>]);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>setTimeout(spawnNextBoss, 12000);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>requestAnimationFrame(gameLoop);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// --- BOSS MANAGEMENT ---</p>
+<p class="p1"><span class="Apple-converted-space">        </span>function spawnNextBoss() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (gameState.currentBossIndex &lt; gameState.bosses.length) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const boss = gameState.bosses[gameState.currentBossIndex];</p>
+<p class="p1"><span class="Apple-converted-space">                </span>boss.active = true; boss.health = boss.maxHealth;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>gameState.currentBoss = boss;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>document.getElementById('bossInfo').style.display = 'block';</p>
+<p class="p1"><span class="Apple-converted-space">                </span>document.getElementById('bossName').textContent = boss.name;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>document.getElementById('bossDescription').textContent = boss.description;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>showDialogue(boss.dialogue);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// --- DIALOGUE ---</p>
+<p class="p1"><span class="Apple-converted-space">        </span>function showDialogue(messages) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>gameState.dialogue.active = true;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>gameState.dialogue.queue = messages;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>gameState.dialogue.index = 0;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>nextDialogue();</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>function nextDialogue() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (gameState.dialogue.index &lt; gameState.dialogue.queue.length) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>document.getElementById('dialogueText').textContent = gameState.dialogue.queue[gameState.dialogue.index];</p>
+<p class="p1"><span class="Apple-converted-space">                </span>document.getElementById('dialogue').style.display = 'block';</p>
+<p class="p1"><span class="Apple-converted-space">                </span>gameState.dialogue.index++;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>} else endDialogue();</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>function endDialogue() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>gameState.dialogue.active = false;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('dialogue').style.display = 'none';</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// --- INTERACTIONS ---</p>
+<p class="p1"><span class="Apple-converted-space">        </span>function interact() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (!gameState.currentBoss || !gameState.currentBoss.active) return;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const boss = gameState.currentBoss;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const distance = Math.hypot(gameState.player.x - boss.x, gameState.player.y - boss.y);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (distance &lt; 120 &amp;&amp; !gameState.dialogue.active) showDialogue(boss.dialogue);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>function useSpecialAbility() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (gameState.player.specialCooldown &gt; 0) return;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>gameState.player.health = Math.min(gameState.player.maxHealth, gameState.player.health + 30);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (gameState.currentBoss &amp;&amp; gameState.currentBoss.active) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const distance = Math.hypot(gameState.player.x - gameState.currentBoss.x, gameState.player.y - gameState.currentBoss.y);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>if (distance &lt; 150) gameState.currentBoss.health -= 40;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>gameState.player.specialCooldown = 300; // 5s cooldown (60fps)</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// --- GAMELOOP ---</p>
+<p class="p1"><span class="Apple-converted-space">        </span>function gameLoop() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>updatePlayer();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>updateBoss();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>updateProjectiles();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>render();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>updateUI();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (gameState.player.health &gt; 0)</p>
+<p class="p1"><span class="Apple-converted-space">                </span>requestAnimationFrame(gameLoop);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>else</p>
+<p class="p1"><span class="Apple-converted-space">                </span>gameOver();</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// --- PLAYER UPDATE ---</p>
+<p class="p1"><span class="Apple-converted-space">        </span>function updatePlayer() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (gameState.dialogue.active) return;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const player = gameState.player;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const speed = 4 + (player.dodging ? 3 : 0);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (gameState.keys['KeyW'] || gameState.keys['ArrowUp']) { player.y = Math.max(50, player.y - speed); player.facing = 'up'; }</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (gameState.keys['KeyS'] || gameState.keys['ArrowDown']) { player.y = Math.min(650, player.y + speed); player.facing = 'down'; }</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (gameState.keys['KeyA'] || gameState.keys['ArrowLeft']) { player.x = Math.max(50, player.x - speed); player.facing = 'left'; }</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (gameState.keys['KeyD'] || gameState.keys['ArrowRight']) { player.x = Math.min(850, player.x + speed); player.facing = 'right'; }</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (gameState.keys['Space'] &amp;&amp; !player.attacking) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>player.attacking = true;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>setTimeout(() =&gt; { player.attacking = false; }, 300);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>checkAttackHit();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if ((gameState.keys['ShiftLeft'] || gameState.keys['ShiftRight']) &amp;&amp; !player.dodging) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>player.dodging = true; player.invulnerable = true;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>setTimeout(() =&gt; { player.dodging = false; player.invulnerable = false; }, 500);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (player.specialCooldown &gt; 0) player.specialCooldown = Math.max(0, player.specialCooldown - 1);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// --- BOSS UPDATE ---</p>
+<p class="p1"><span class="Apple-converted-space">        </span>function updateBoss() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (!gameState.currentBoss || !gameState.currentBoss.active) return;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const boss = gameState.currentBoss;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>boss.attackCooldown--; boss.movePattern++;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Déplacement boss</p>
+<p class="p1"><span class="Apple-converted-space">            </span>switch(boss.attackPattern) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>case 'inbound': boss.x += Math.sin(boss.movePattern * 0.02) * 2; break;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>case 'predictive': if (boss.movePattern % 120 === 0) { boss.x = gameState.player.x + (Math.random() - 0.5) * 200; boss.y = gameState.player.y + (Math.random() - 0.5) * 200; } break;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>case 'sound': boss.y += Math.cos(boss.movePattern * 0.03) * 1.5; break;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>case 'waves': boss.x += Math.sin(boss.movePattern * 0.01) * 3; boss.y += Math.cos(boss.movePattern * 0.02) * 2; break;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>boss.x = Math.max(100, Math.min(800, boss.x));</p>
+<p class="p1"><span class="Apple-converted-space">            </span>boss.y = Math.max(100, Math.min(600, boss.y));</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (boss.attackCooldown &lt;= 0) { executeAttack(boss); boss.attackCooldown = 90 + Math.random() * 60; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>function executeAttack(boss) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const distance = Math.hypot(gameState.player.x - boss.x, gameState.player.y - boss.y);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>switch(boss.attackPattern) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>case 'inbound': for (let i = -2; i &lt;= 2; i++) createProjectile(boss.x, boss.y, i * 0.5, boss.color); break;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>case 'predictive': const fx = gameState.player.x + (Math.random() - 0.5) * 100, fy = gameState.player.y + (Math.random() - 0.5) * 100;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>createProjectile(boss.x, boss.y, Math.atan2(fy - boss.y, fx - boss.x), boss.color); break;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>case 'sound': if (distance &lt; 150 &amp;&amp; !gameState.player.invulnerable) gameState.player.health = Math.max(0, gameState.player.health - 12); break;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>default: if (distance &lt; 300) { const a = Math.atan2(gameState.player.y - boss.y, gameState.player.x - boss.x); createProjectile(boss.x, boss.y, a, boss.color); } break;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// --- ATTAQUES &amp; PROJECTILES ---</p>
+<p class="p1"><span class="Apple-converted-space">        </span>function checkAttackHit() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (!gameState.currentBoss || !gameState.currentBoss.active) return;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const boss = gameState.currentBoss;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const distance = Math.hypot(gameState.player.x - boss.x, gameState.player.y - boss.y);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (distance &lt; 100) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const damage = 20 + (gameState.player.level * 5);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>boss.health -= damage;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>if (boss.health &lt;= 0) defeatBoss();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>function createProjectile(x, y, angle, color) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>gameState.projectiles.push({</p>
+<p class="p1"><span class="Apple-converted-space">                </span>x: x, y: y,</p>
+<p class="p1"><span class="Apple-converted-space">                </span>vx: Math.cos(angle) * 3,</p>
+<p class="p1"><span class="Apple-converted-space">                </span>vy: Math.sin(angle) * 3,</p>
+<p class="p1"><span class="Apple-converted-space">                </span>color: color,</p>
+<p class="p1"><span class="Apple-converted-space">                </span>life: 200</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>function updateProjectiles() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>gameState.projectiles = gameState.projectiles.filter(proj =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>proj.x += proj.vx; proj.y += proj.vy; proj.life--;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>// Collision avec le joueur</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const distance = Math.hypot(gameState.player.x - proj.x, gameState.player.y - proj.y);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>if (distance &lt; 25 &amp;&amp; !gameState.player.invulnerable) {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>gameState.player.health = Math.max(0, gameState.player.health - 16);</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>proj.life = 0; // détruire projectile</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                </span>// On retire le projectile si hors écran ou dead</p>
+<p class="p1"><span class="Apple-converted-space">                </span>return proj.life &gt; 0 &amp;&amp; proj.x &gt; 0 &amp;&amp; proj.x &lt; canvas.width &amp;&amp; proj.y &gt; 0 &amp;&amp; proj.y &lt; canvas.height;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// --- BOSS DEFEAT &amp; VICTORY ---</p>
+<p class="p1"><span class="Apple-converted-space">        </span>function defeatBoss() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (!gameState.currentBoss) return;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>gameState.currentBoss.active = false;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>gameState.bossesDefeated++;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const expGain = 80 + (gameState.currentBossIndex * 20);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>gameState.player.exp += expGain;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Level up ?</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (gameState.player.exp &gt;= gameState.player.expToNext) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>gameState.player.level++;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>gameState.player.exp = 0;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>gameState.player.expToNext += 50;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>gameState.player.maxHealth += 25;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>gameState.player.health = gameState.player.maxHealth;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>showDialogue([</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>`${gameState.currentBoss.name} vaincu!`,</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>"Vous avez appris à collaborer avec cette IA!",</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>`NIVEAU ${gameState.player.level}! Santé augmentée!`,</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>`Boss restants: ${gameState.bosses.length - gameState.bossesDefeated}`</p>
+<p class="p1"><span class="Apple-converted-space">                </span>]);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>showDialogue([</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>`${gameState.currentBoss.name} vaincu!`,</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>"L'humain et l'IA peuvent coexister!",</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>`Boss restants: ${gameState.bosses.length - gameState.bossesDefeated}`</p>
+<p class="p1"><span class="Apple-converted-space">                </span>]);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('bossInfo').style.display = 'none';</p>
+<p class="p1"><span class="Apple-converted-space">            </span>gameState.currentBossIndex++;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (gameState.bossesDefeated &gt;= gameState.bosses.length) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>setTimeout(() =&gt; { document.getElementById('victoryScreen').style.display = 'block'; }, 3000);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>setTimeout(spawnNextBoss, 4000);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>function gameOver() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>showDialogue([</p>
+<p class="p1"><span class="Apple-converted-space">                </span>"GAME OVER !",</p>
+<p class="p1"><span class="Apple-converted-space">                </span>"L'IA a pris le contrôle...",</p>
+<p class="p1"><span class="Apple-converted-space">                </span>"Recharge la page pour recommencer."</p>
+<p class="p1"><span class="Apple-converted-space">            </span>]);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// --- RENDU CANVAS ---</p>
+<p class="p1"><span class="Apple-converted-space">        </span>function render() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ctx.clearRect(0, 0, canvas.width, canvas.height);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Fond</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ctx.fillStyle = "#2d3748";</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ctx.fillRect(0, 0, canvas.width, canvas.height);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Projectiles</p>
+<p class="p1"><span class="Apple-converted-space">            </span>gameState.projectiles.forEach(proj =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>ctx.beginPath();</p>
+<p class="p1"><span class="Apple-converted-space">                </span>ctx.arc(proj.x, proj.y, 10, 0, 2 * Math.PI);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>ctx.fillStyle = proj.color;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>ctx.globalAlpha = 0.8;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>ctx.fill();</p>
+<p class="p1"><span class="Apple-converted-space">                </span>ctx.globalAlpha = 1.0;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Boss</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (gameState.currentBoss &amp;&amp; gameState.currentBoss.active) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>ctx.beginPath();</p>
+<p class="p1"><span class="Apple-converted-space">                </span>ctx.arc(gameState.currentBoss.x, gameState.currentBoss.y, 36, 0, 2 * Math.PI);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>ctx.fillStyle = gameState.currentBoss.color;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>ctx.fill();</p>
+<p class="p1"><span class="Apple-converted-space">                </span>// Boss name</p>
+<p class="p1"><span class="Apple-converted-space">                </span>ctx.font = "18px Courier New";</p>
+<p class="p1"><span class="Apple-converted-space">                </span>ctx.fillStyle = "#fff";</p>
+<p class="p1"><span class="Apple-converted-space">                </span>ctx.textAlign = "center";</p>
+<p class="p1"><span class="Apple-converted-space">                </span>ctx.fillText(gameState.currentBoss.name, gameState.currentBoss.x, gameState.currentBoss.y - 48);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Joueur</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ctx.save();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ctx.beginPath();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ctx.arc(gameState.player.x, gameState.player.y, 22, 0, 2 * Math.PI);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ctx.fillStyle = gameState.player.dodging ? "#ffe66d" : "#4ecdc4";</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ctx.fill();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ctx.restore();</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Animation attaque</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (gameState.player.attacking) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>ctx.save();</p>
+<p class="p1"><span class="Apple-converted-space">                </span>ctx.strokeStyle = "#ff6b6b";</p>
+<p class="p1"><span class="Apple-converted-space">                </span>ctx.lineWidth = 7;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>let dx = 0, dy = 0;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>switch(gameState.player.facing) {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>case 'up': dy = -35; break;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>case 'down': dy = 35; break;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>case 'left': dx = -35; break;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>case 'right': dx = 35; break;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                </span>ctx.beginPath();</p>
+<p class="p1"><span class="Apple-converted-space">                </span>ctx.moveTo(gameState.player.x, gameState.player.y);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>ctx.lineTo(gameState.player.x + dx, gameState.player.y + dy);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>ctx.stroke();</p>
+<p class="p1"><span class="Apple-converted-space">                </span>ctx.restore();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// --- UI DYNAMIQUE ---</p>
+<p class="p1"><span class="Apple-converted-space">        </span>function updateUI() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('level').textContent = gameState.player.level;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('exp').textContent = gameState.player.exp;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('expMax').textContent = gameState.player.expToNext;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('healthFill').style.width = (100 * gameState.player.health / gameState.player.maxHealth) + "%";</p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('bossCount').textContent = gameState.bossesDefeated;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (gameState.currentBoss)</p>
+<p class="p1"><span class="Apple-converted-space">                </span>document.getElementById('bossHealthFill').style.width = (100 * gameState.currentBoss.health / gameState.currentBoss.maxHealth) + "%";</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/script&gt;</p>
+<p class="p1">&lt;/body&gt;</p>
+<p class="p1">&lt;/html&gt;</p>
+</body>
+</html>
